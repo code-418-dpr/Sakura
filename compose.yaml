@@ -69,7 +69,6 @@ services:
       # - "traefik.http.middlewares.auth.basicauth.users=${DASHBOARD_AUTH}"
     depends_on:
       - postgres
-      - seq
     networks:
       - sakura-network
 
@@ -90,7 +89,6 @@ services:
       - "3000:3000"
     depends_on:
       - postgres
-      - seq
     networks:
       - sakura-network
 
