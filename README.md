@@ -3,7 +3,7 @@
 [![license](https://img.shields.io/github/license/code-418-dpr/Sakura)](https://opensource.org/licenses/MIT)
 [![release](https://img.shields.io/github/v/release/code-418-dpr/Sakura?include_prereleases)](https://github.com/code-418-dpr/Sakura/releases)
 
-Шаблон
+Платформа для организации лотерей, в которых _хочется_ участвовать
 
 <details>
   <summary><h2>Демо</h2></summary>
@@ -14,7 +14,6 @@
 
 - веб-приложение
     - [x] хорошо смотрится как на десктопных, так и на мобильных устройствах
-- Telegram-бот:
     - ...
 
 ## Архитектура
@@ -22,7 +21,6 @@
 Проект состоит из микросервисов, предназначенных для развёртывания в Docker Compose:
 
 - [веб-приложение](https://github.com/code-418-dpr/Sakura-web)
-- [Telegram-бот](https://github.com/code-418-dpr/Sakura-bot)
 - PostgreSQL — база данных
 - Traefik — обратный прокси
 
@@ -42,14 +40,12 @@
 
 ```shell
 git clone git@github.com:code-418-dpr/Sakura-web.git services/Sakura-web
-git clone git@github.com:code-418-dpr/Sakura-bot.git services/Sakura-bot
 ```
 
 или по HTTPS:
 
 ```shell
 git clone https://github.com/code-418-dpr/Sakura-web.git services/Sakura-web
-git clone https://github.com/code-418-dpr/Sakura-bot.git services/Sakura-bot
 ```
 
 После этого вы можете вносить изменения в каждый из сервисов по-отдельности (в соответствии с инструкциями, описанными в
@@ -72,8 +68,6 @@ docker compose --profile server up -d --build
 
 ```shell
 mv ./services/Sakura-web/.env ./services/Sakura-web/_.env
-mv ./services/Sakura-bot/.env ./services/Sakura-bot/_.env 
 docker compose --profile local up -d --build
 mv ./services/Sakura-web/_.env ./services/Sakura-web/.env 
-mv ./services/Sakura-bot/_.env ./services/Sakura-bot/.env
 ```
