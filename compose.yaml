@@ -72,6 +72,28 @@ services:
     networks:
       - sakura-network
 
+  prisma-studio:
+    profiles:
+      - server
+    build:
+      context: ./services/Sakura-web
+      dockerfile: prisma-studio.Dockerfile
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: "postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.prisma-studio.rule=Host(`db-studio.${HOSTNAME}`)"
+      - "traefik.http.routers.prisma-studio.entrypoints=websecure"
+      - "traefik.http.routers.prisma-studio.tls.certresolver=myresolver"
+      - "traefik.http.services.prisma-studio.loadbalancer.server.port=5555"
+    ports:
+      - "5555:5555"
+    depends_on:
+      - postgres
+    networks:
+      - sakura-network
+
   web-local:
     profiles:
       - local
@@ -87,6 +109,22 @@ services:
       AUTH_YANDEX_SECRET: ${AUTH_YANDEX_SECRET}
     ports:
       - "3000:3000"
+    depends_on:
+      - postgres
+    networks:
+      - sakura-network
+
+  prisma-studio-local:
+    profiles:
+      - local
+    build:
+      context: ./services/Sakura-web
+      dockerfile: prisma-studio.Dockerfile
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: "postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}"
+    ports:
+      - "5555:5555"
     depends_on:
       - postgres
     networks:
